@@ -5,3 +5,5 @@ downloads/*
 .htaccess
 photography-archive/*/*.html
 photography-archive/*/*/*.jpg
+database.sqlite3
+data/blog
