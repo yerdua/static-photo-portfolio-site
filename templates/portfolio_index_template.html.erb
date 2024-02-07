@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Audrey Penven | Photography Portfolio</title>
+    <%= Helpers.head_content(meta_property_tags) %>
+    <style type='text/css'>
+      <% albums.each do |album| %>
+        #<%= album.identifier %>-block {
+          background-image: url('<%= album.header_photo.img_url(:medium) %>');
+          background-attachment: fixed;
+          background-size: 94vw auto;
+          background-position: 3vw var(--navbar-height);
+        }
+      <% end %>
+
+    </style>
+  </head>
+  <body>
+    <div class='content-container'>
+      <header class='site-header sticky'>
+        <%= File.read('templates/top_nav.html') %>
+      </header>
+      <section id='page-header' class='portfolio-header'>
+        <div>
+          <h1 class='with-underline with-overline red-text'>Photography Portfolio</h1>
+        </div>
+      </section>
+      <section>
+        <% albums.each do |album| %>
+          <div id="<%= album.identifier %>-block" class='portfolio-album-block'>
+            <div>
+              <a href="<%= album.album_path %>">
+              <h3 class="red-text with-underline with-overline"><%= album.title %></h3></a>
+            </div>
+          </div>
+        <% end %>
+      </section>
+      <footer class='site-footer'>
+        <%= Helpers.site_footer %>
+      </footer>
+    </div>
+  </body>
+</html>

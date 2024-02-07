@@ -1,0 +1,20 @@
+<%
+  # TODO: make this not the jankiest fucking thing
+  subject_tags = (subjects || []).map do |subject|
+    if subject.is_a? Hash
+      result_string = ''
+      subject.map do |k, v|
+        result_string += "#{ Helpers.link_for(k) }: "
+
+        v = Array(v)
+        result_string += v.map do |entity|
+          Helpers.link_for(entity, use_long_name: true)
+        end.join(v.count > 2 ? ', ' : ' &amp; ')
+      end
+      result_string
+    else
+      Helpers.link_for(subject, use_long_name: true)
+    end
+  end
+%>
+<%= subject_tags.join(subject_tags.count > 2 ? ", " : " &amp; ") %>

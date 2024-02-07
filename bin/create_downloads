@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+
+# This script assumes an archive album that knows its origin folder, and that
+# origin folder has full-res images in a folder named 'fullres-jpg'
+# If you want this to handle other cases, update the code
+
+require "./bin/require_everything"
+
+if ["help", nil].include?(ARGV[0])
+  puts("path/to/album full-album")
+  puts("path/to/album subjects [exclude=subject1,subject2...]")
+  puts("path/to/album subjects [only=subject1,subject2...]")
+  return
+end
+
+# path to archive album
+album = ArchiveAlbum.new(ARGV[0].gsub(/^site\//, ""))
+
+# options: full-album, subjects
+case ARGV[1]
+when "full-album"
+  puts("creating the download object")
+  download = Download.create_download_for_album(album: album)
+  puts("writing the page")
+  download.write_page!
+  puts("added download at: #{download.url}")
+when "subjects"
+  # optional ARGV[2]: exclude=subject1,subject2,...
+  exclude_list = if ARGV[2]&.start_with?("exclude")
+    ARGV[2].gsub("exclude=", "").split(",")
+  else
+    []
+  end
+
+  download_pages = []
+
+  only_list = if ARGV[2]&.start_with?("only")
+    ARGV[2].gsub("only=", "").split(",")
+  else
+    nil
+  end
+
+  (only_list || (album.subjects - exclude_list)).each do |subject|
+    puts("creating download for #{subject}")
+    download = Download.create_download_for_subject(subject_key: subject, album: album)
+    puts("writing page for #{subject}")
+    download.write_page!
+    puts("added download at: #{download.url}")
+    download_pages << download.url
+  end
+
+  puts(download_pages)
+else
+  "FAILED!"
+end

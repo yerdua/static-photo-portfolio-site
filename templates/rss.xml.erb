@@ -1,0 +1,29 @@
+<rss version="2.0">
+  <channel>
+    <title>Audrey Penven - photography and blog</title>
+    <link>https://audreypenven.net</link>
+    <description></description>
+    <language>en-us</language>
+    <webMaster>audrey@audreypenven.net (Audrey Penven)</webMaster>
+    <pubDate><%= DateTime.now.rfc822 %></pubDate>
+    <lastBuildDate><%= DateTime.now.rfc822 %></lastBuildDate>
+
+
+    <% items.each do |feed_item| %>
+    <item>
+      <title><%= feed_item.title %></title>
+      <link><%= feed_item.url %></link>
+      <description>
+        <%= feed_item.description %>
+      </description>
+      <guid><%= feed_item.url %></guid>
+      <image>
+        <url><%= feed_item.image %></url>
+        <link><%= feed_item.url %></link>
+        <title><%= feed_item.title %></title>
+      </image>
+      <pubDate><%= feed_item.published_at.rfc822 %></pubDate>
+    </item>
+    <% end %>
+  </channel>
+</rss>

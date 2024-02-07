@@ -1,0 +1,12 @@
+<item>
+  <title><%= title %></title>
+  <link><%= url %></link>
+  <description>
+    <a href="<%= url %>"><img src="<%= primary_photo.img_url(:medium) %>"></a>
+  </description>
+  <author>audrey@audreypenven.net (Audrey Penven)</author>
+  <category></category>
+  <guid><%= url %></guid>
+  <pubDate><%= (published_at || date || end_date || start_date).rfc822 %></pubDate>
+  <source url="<%= URI.join(SITE_BASE_URL, 'rss.xml').to_s %>">Audrey Penven</source>
+</item>

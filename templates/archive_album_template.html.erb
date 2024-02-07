@@ -1,0 +1,69 @@
+<html lang="en">
+  <head>
+    <title><%= title %></title>
+    <%= head_content(meta_property_tags) %>
+    <style type='text/css'>
+      #page-header {
+        background-image: url('<%= header_photo.img_url(:medium) %>');
+        min-height: 33vw;
+        background-attachment: fixed;
+        background-size: 94vw auto;
+        background-position: 3vw var(--navbar-height);
+        display: table;
+      }
+    </style>
+  </head>
+
+  <body class='archive-album'>
+    <div class='content-container'>
+      <header class='site-header sticky'>
+        <%= File.read('templates/top_nav.html') %>
+      </header>
+      <section id='page-header' class='gallery-page'>
+        <div>
+          <h1 class="with-underline with-overline red-text"><%= title %></h1>
+        </div>
+      </section>
+      <section class="description">
+        <%= description  %>
+        <% if location %>
+          <p><%= link_for(location, show_location_details: true) %></p>
+        <% end %>
+        <% if start_date && end_date %>
+          <p><%= start_date.strftime('%B %-d, %Y') %> - <%= end_date.strftime('%B %-d, %Y') %></p>
+        <% elsif date %>
+          <p><%= date.strftime('%B %-d, %Y') %></p>
+        <% end %>
+      </section>
+      <section class="gallery">
+        <% photos.each do |photo| %>
+          <div class='photo-link'>
+            <a href="<%= photo.page_path %>#photo"<%= "title='#{photo.filename}'" if draft %>><img class="thumbnail" src="<%= photo.img_url(:small) %>"></a>
+          </div>
+        <% end %>
+      </section>
+      <% if info['links'] %>
+        <section class="links">
+          <h4 class="red-text with-underline">Links</h4>
+          <ul class="links-list">
+            <% info['links'].each do |link| %>
+              <li>
+                <% if link['key'] %>
+                  <%= link_for(link['key'], omit_if_no_url: true, **link.symbolize_keys.slice(:selected_url, :display_name, :use_long_name)) %>
+                <% else %>
+                  <%= link_tag(display_name: link['display_name'], url: link['url']) %>
+                <% end %>
+                <% if link['description'] %>
+                  <span class='link-description'><%= link['description'] %></span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+      <footer class='site-footer'>
+        <%= site_footer %>
+      </footer>
+    </div>
+  </body>
+</html>

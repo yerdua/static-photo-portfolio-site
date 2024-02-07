@@ -1,0 +1,104 @@
+<html lang="en">
+  <head>
+    <title>Audrey Penven | Photography Portfolio | <%= title %></title>
+    <%= Helpers.head_content(meta_property_tags) %>
+    <style type='text/css'>
+      #page-header {
+        background-image: url('<%= header_photo.img_url(:medium) %>');
+        min-height: 33vw;
+        background-attachment: fixed;
+        background-size: 94vw auto;
+        background-position: 3vw 0;
+        display: table;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class='content-container'>
+      <header class='site-header'>
+        <%= File.read('templates/top_nav.html') %>
+      </header>
+      <section id='page-header' class='gallery-page'>
+        <div>
+          <h1 class="red-text with-underline with-overline"><%= title %></h1>
+        </div>
+      </section>
+      <section class='portfolio-gallery'>
+        <% photos.each_with_index do |photo, index| %>
+          <div class='portfolio-photo-container' id="photo_<%= index %>">
+            <br>
+            <picture>
+              <img src="<%= photo.img_url(:medium) %>"/>
+            </picture>
+            <div class='photo-info'>
+              <% if photo.title && photo.title != title %>
+                <h4 class='red-text'><%= photo.title %></h4>
+              <% end %>
+              <%= photo.description %>
+              <% if photo.location %>
+                <%= link_for(photo_location) %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </section>
+      <section class="description">
+        <%= description %>
+      </section>
+      <section class="gallery">
+        <% photos.each_with_index do |photo, index| %>
+          <div class='photo-link'>
+            <a href="#photo_<%= index %>"><img class="thumbnail" src="<%= photo.img_url(:small) %>" title="<%= photo.filename %>"/></a>
+          </div>
+        <% end %>
+      </section>
+      <% if info['credits'] %>
+        <section class="credits">
+          <% if info['credits']['collaborators'] %>
+            <h3 class="red-text with-underline">Collaborators</h3>
+            <ul class='collaborator-list'>
+              <% info['credits']['collaborators'].each do |collaborator| %>
+                <li>
+                  <%= link_for(collaborator['key']) %>
+                  <%= collaborator['description'] %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+          <% info['credits'].keys.each do |key| %>
+            <% next if key == 'collaborators' %>
+            <% if info['credits'][key] %>
+              <h3 class="red-text with-underline"><%= key.capitalize %></h3>
+              <ul class='model-list'>
+                <% info['credits'][key].each do |model| %>
+                  <li>
+                    <%= link_for(model['key']) %>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
+          <% end %>
+        </section>
+      <% end %>
+      <% if info['links'] %>
+        <section class="links">
+          <h3 class="red-text with-underline">Links</h3>
+          <ul class="links-list">
+            <% info['links'].each do |link| %>
+              <li>
+                <%= Helpers.link_tag(display_name: link['display_name'], url: link['url']) %>
+                <% if link['description'] %>
+                  <span class='link-description'><%= link['description'] %></span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+      <footer class='site-footer'>
+        <%= Helpers.site_footer %>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require './bin/require_everything.rb'
+IRB.start

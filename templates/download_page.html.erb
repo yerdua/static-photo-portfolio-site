@@ -1,0 +1,57 @@
+<html lang="en">
+  <head>
+    <title><%= title %></title>
+    <%= Helpers.head_content(meta_property_tags) %>
+  </head>
+
+  <body class='preview-album'>
+    <div class='content-container'>
+      <header class='site-header'>
+        <%= File.read('templates/top_nav.html') %>
+      </header>
+      <section class="description">
+        <h1><%= title %></h1>
+        <p class="red-text">
+          Please don't share this link publicly. If Audrey sent you this, it's just for you! Download link will work until <%= 90.days.from_now.strftime('%-d %B, %Y') %>. After that date, send me a message and I'll make it work again.
+        </p>
+        <% if (zip_path = remote_zip_filename || zip_file) %>
+          <p>Click the <a href="<%= zip_path %>">download link</a> to get full-res versions. If you're the subject of these photos<%= " (#{subject.display_name})" if subject %> or they're from your event, you're welcome to use them, with credit. When possible, credit me as "Audrey Penven" with a link to my website (https://www.audreypenven.net). On social media platforms, you can tag me instead:
+          <br />Instagram: <a href="https://www.instagram.com/y3rdua/">y3rdua</a>
+          <br />Mastodon: <a href="https://xoxo.zone/@yerdua">@yerdua@xoxo.zone</a>
+          <br />Twitter: <a href="https://www.twitter.com/yerdua">yerdua</a>
+          <br />Facebook: <a href="https://www.facebook.com/yerdua">https://www.facebook.com/yerdua</a>
+          </p>
+          <p>
+            If I've made any mistakes in how I've credited you, or if there's any photos you prefer aren't on the internet for whatever reason, please send me a message at audrey@audreypenven.net (or through whatever messaging app we're communicating in). I'll get it fixed up as quickly as I can.
+          </p>
+          <a href="<%= zip_path %>"><h4>Download All</h4></a>
+        <% end %>
+        <% if public_album_link %>
+          <p><a href="<%= public_album_link %>">view public album</a></p>
+        <% end %>
+      </section>
+      <section class='gallery'>
+        <p>here's a preview of what's in the downloadable zip file:</p>
+        <% photo_filenames.each do |filename| %>
+          <div class='preview-photo-container'>
+            <%= filename %>
+            <br>
+            <picture>
+              <img src="<%= [preview_path, filename].join('/') %>"/>
+            </picture>
+          </div>
+        <% end %>
+        <% if (zip_path = remote_zip_filename || zip_file) %>
+          <a href="<%= zip_path %>"><h4>Download All</h4></a>
+        <% end %>
+
+        <% if public_album_link %>
+          <a href="<%= public_album_link %>"><h4>view public album</h4></a>
+        <% end %>
+      </section>
+      <footer class='site-footer'>
+        <%= Helpers.site_footer %>
+      </footer>
+    </div>
+  </body>
+</html>

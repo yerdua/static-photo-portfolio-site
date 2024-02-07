@@ -1,0 +1,7 @@
+.DS_Store
+.DS_Store?
+downloads/*
+.well-known
+.htaccess
+photography-archive/*/*.html
+photography-archive/*/*/*.jpg

@@ -1,0 +1,52 @@
+<html lang="en">
+  <head>
+    <title>Audrey Penven - <%= title || album.title %></title>
+    <%= Helpers.head_content(meta_property_tags) %>
+  </head>
+  <body class='photo-page'>
+    <div class='content-container'>
+      <header class='site-header'>
+        <%= File.read('templates/top_nav.html') %>
+      </header>
+      <section class='photo-container' id='photo'>
+        <img src="<%= img_url(:medium) %>" class="orientation-<%= orientation %> <%= '_35mm' if is_35mm? %>">
+      </section>
+      <section class='album-nav'>
+        <% if prev_path %><a href="<%= prev_path %>#photo" title="previous photo" tabindex="1"><% end %>
+          <span class='nav-prev'><i class="fas fa-chevron-left"></i></span>
+        <% if prev_path %></a><% end %>
+
+        <a href="<%= album.album_path %>" title="back to gallery" tabindex="2"><span class='nav-index'><i class="fas fa-grip-horizontal"></i></span></a>
+
+        <% if next_path %><a href="<%= next_path %>#photo" title="next photo" tabindex="3"><% end %>
+          <span class='nav-next'><i class="fas fa-chevron-right"></i></span>
+        <% if next_path %></a><% end %>
+      </section>
+      <section class='photo-info'>
+        <h1 class='red-text'><%= album.title %><%= ": #{title}" if title && title != album.title %></h1>
+        <% if album.description || album.shared_photo_description || description || subjects&.any? || location %>
+          <section class='description'>
+            <%= album.shared_photo_description || album.description %>
+            <%= description %>
+            <% if subjects&.any? %>
+              <p>
+                <%= ERB.new(File.read('templates/partials/photo_description_subjects.html.erb')).result_with_hash(subjects: subjects) %>
+              </p>
+            <% end %>
+            <% if location %>
+              <% location_entity = Location.find_by(short_name: location) %>
+              <% show_details = !(album.description && album.description&.include?(location_entity&.details.to_s)) %>
+              <%= link_for(location, show_location_details: show_details) %>
+            <% end %>
+          </section>
+        <% end %>
+        <% if date %>
+          <section class='date'><%= date.strftime('%B %-d, %Y') %></section>
+        <% end %>
+      </section>
+      <footer class='site-footer'>
+        <%= Helpers.site_footer %>
+      </footer>
+    </div>
+  </body>
+</html>

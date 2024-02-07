@@ -1,0 +1,34 @@
+<html lang="en">
+  <head>
+    <title><%= title %></title>
+    <%= Helpers.head_content(meta_property_tags) %>
+  </head>
+
+  <body class='preview-album'>
+    <div class='content-container'>
+      <header class='site-header'>
+        <%= File.read('templates/top_nav.html') %>
+      </header>
+      <section class='gallery'>
+        <% if zip_file %>
+          <a href="<%= zip_file %>"><h4>Download All</h4></a>
+        <% end %>
+        <% photos.each do |photo| %>
+          <div class='preview-photo-container'>
+            <%= photo.filename %>
+            <br>
+            <picture>
+              <img src="<%= photo.img_url(:medium) %>"/>
+            </picture>
+          </div>
+        <% end %>
+        <% if zip_file %>
+          <a href="<%= zip_file %>"><h4>Download All</h4></a>
+        <% end %>
+      </section>
+      <footer class='site-footer'>
+        <%= Helpers.site_footer %>
+      </footer>
+    </div>
+  </body>
+</html>

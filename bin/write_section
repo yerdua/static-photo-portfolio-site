@@ -1,0 +1,89 @@
+#!/usr/bin/env ruby
+
+require "./bin/require_everything"
+
+case ARGV[0]
+when "archive"
+  Archive.new.write_page!
+when "archive-albums"
+  archive = Archive.new
+  albums = case ARGV[1]
+  when "last"
+    archive.albums.last(ARGV[2].to_i || 1)
+  when "first"
+    archive.albums.first(ARGV[2].to_i || 1)
+  when "index"
+    [archive.albums[ARGV[2].to_i]]
+  when "dir"
+    albums = [ArchiveAlbum.new(ARGV[2])]
+  when "all", nil
+    archive.albums
+  else
+    raise "no clue what you intend with #{ARGV[1]}"
+  end
+
+  albums.each do |alb|
+    puts("writing #{alb.title}")
+    alb.write_pages!
+  end
+
+when "portfolio"
+  Portfolio.new.write_page!
+when "portfolio-albums"
+  portfolio = Portfolio.new
+  if ARGV[1].nil?
+    portfolio.write_album_pages!
+  else
+    album = portfolio.albums.find { |alb| File.split(alb.folder).last == ARGV[1] }
+    album.write_page!
+  end
+
+when "blog"
+  blog = Blog.new
+  if ARGV[1].nil?
+    blog.write_published_posts_if_necessary!
+    blog.write_page!
+  elsif ARGV[1] == "--force"
+    blog.rewrite_all_published_posts!
+    blog.write_page!
+  end
+
+when "blog-post"
+  blog = Blog.new
+  if ARGV[1].nil?
+    puts("need to specify index")
+  else
+    blog.published_posts[ARGV[1].to_i].write_page!
+    blog.write_page!
+  end
+
+when "about"
+  puts("rewriting about page")
+  About.new.write_page!
+when "site"
+  puts("rewriting everything")
+  Site.new.regenerate_everything!
+when "insta-links"
+  puts("rewriting insta links page")
+  InstaLinks.new.write_page!
+when "home"
+  puts("rewriting home page")
+  Home.new.write_page!
+when "help"
+when nil
+  puts("options:")
+  %w[
+    archive
+    archive-albums
+    portfolio
+    portfolio-albums
+    blog
+    blog-post
+    about
+    site
+    insta-links
+    home
+  ].each { |opt| puts("      #{opt}") }
+else
+  puts("don't understand, doing nothing. try typing 'help'")
+end

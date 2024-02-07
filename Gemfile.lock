@@ -1,0 +1,44 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activemodel (7.0.4)
+      activesupport (= 7.0.4)
+    activerecord (7.0.4)
+      activemodel (= 7.0.4)
+      activesupport (= 7.0.4)
+    activesupport (7.0.4)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+    cgi (0.1.0)
+    concurrent-ruby (1.1.10)
+    erb (2.2.2)
+      cgi
+    i18n (1.12.0)
+      concurrent-ruby (~> 1.0)
+    mini_magick (4.11.0)
+    minitest (5.16.3)
+    rake (13.0.6)
+    rexml (3.2.6)
+    rss (0.3.0)
+      rexml
+    rubyzip (2.3.2)
+    sqlite3 (1.4.2)
+    tzinfo (2.0.5)
+      concurrent-ruby (~> 1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activerecord (~> 7.0)
+  erb
+  mini_magick
+  rake (~> 13.0)
+  rss
+  rubyzip
+  sqlite3 (~> 1.4)
+
+BUNDLED WITH
+   2.4.21

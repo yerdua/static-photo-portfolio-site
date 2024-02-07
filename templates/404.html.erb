@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Audrey Penven | 404</title>
+    <%= Helpers.head_content(meta_property_tags) %>
+    <style type='text/css'>
+      #page-header {
+        background-image: url('/images/self-with-camera-circle.jpg');
+        min-height: 33vw;
+        background-attachment: fixed;
+        background-size: 94vw auto;
+        background-position: 3vw var(--navbar-height);
+        display: table;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content-container">
+      <header class="site-header sticky">
+        <%= File.read('templates/top_nav.html') %>
+      </header>
+      <section id='page-header'>
+        <div>
+          <h1 class='with-underline with-overline red-text'>404 - Can't find whatever you're looking for</h1>
+        </div>
+      </section>
+      <footer class='site-footer'>
+        <%= Helpers.site_footer %>
+      </footer>
+    </div>
+  </body>

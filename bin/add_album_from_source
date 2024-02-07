@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require "./bin/require_everything"
+
+album_path = ARGV[0].strip
+
+is_preview = ARGV[1] == "preview"
+
+if album_path.blank?
+  puts("need to specify source album path")
+  return
+end
+
+origin_album = OriginAlbum.new(album_path)
+
+if is_preview
+  preview_album = origin_album.write_to_preview_album
+  puts("wrote preview album at #{preview_album.local_dir_path}")
+else
+  origin_album.write_to_local_album
+  puts("Add '#{origin_album.local_folder}' to config/archive_list.yml to include it")
+end

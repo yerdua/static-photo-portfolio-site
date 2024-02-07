@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Audrey Penven | <%= title %></title>
+    <%= Helpers.head_content(meta_property_tags) %>
+    <style type='text/css'>
+      #page-header {
+        background-image: url(<%= header_image_url || BlogPost::DEFAULT_HEADER_IMAGE %>);
+        min-height: 33vw;
+        background-attachment: fixed;
+        background-size: 94vw auto;
+        background-position: 3vw var(--navbar-height);
+        display: table;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content-container">
+      <header class="site-header sticky">
+        <%= File.read('templates/top_nav.html') %>
+      </header>
+      <section id='page-header'>
+        <div>
+          <h1 class='with-underline with-overline red-text'><%= title %></h1>
+        </div>
+      </section>
+      <section id='post-content'>
+        <h4 class='blog-post-date'><%= (published_at || created_at).strftime('%-d %B, %Y — %H:%M') %></h4>
+        <%= content %>
+      </section>
+      <footer class='site-footer'>
+        <%= Helpers.site_footer %>
+      </footer>
+    </div>
+  </body>

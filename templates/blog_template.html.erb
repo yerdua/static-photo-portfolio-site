@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Audrey Penven | Blog</title>
+    <%= Helpers.head_content(meta_property_tags) %>
+    <style type='text/css'>
+      #page-header {
+        background-image: url('/images/blog.jpg');
+        min-height: 33vw;
+        background-attachment: fixed;
+        background-size: 94vw auto;
+        background-position: 3vw var(--navbar-height);
+        display: table;
+      }
+    </style>
+  </head>
+  <body class='blog'>
+    <div class="content-container">
+      <header class="site-header sticky">
+        <%= File.read('templates/top_nav.html') %>
+      </header>
+      <section id='page-header'>
+        <div>
+          <h1 class='with-underline with-overline red-text'>Blog</h1>
+        </div>
+      </section>
+      <section id='posts'>
+        <% published_posts.each do |post| %>
+          <div class='blog-post-excerpt'>
+            <a href="<%= post.relative_url %>" class='blog-post-title-link'>
+              <h3 class='red-text with-underline'><%= post.title %></h3>
+            </a>
+            <h6><%= post.published_at.strftime('%B %d, %Y — %H:%M') %></h6>
+            <% if post.header_image_url %>
+              <img class='blog-post-excerpt-image' src="<%= post.header_image_url %>">
+            <% end %>
+            <%= post.excerpt %>
+            <%= Helpers.link_tag(display_name: 'read more...', url: post.relative_url) %>
+          </div>
+        <% end %>
+      </section>
+      <footer class='site-footer'>
+        <%= Helpers.site_footer %>
+      </footer>
+    </div>
+  </body>

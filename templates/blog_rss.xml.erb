@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+  <channel>
+    <title>Audrey Penven | Blog</title>
+    <link>https://audreypenven.net/blog</link>
+    <description></description>
+    <% posts.each do |post| %>
+      <item>
+        <title><%= post.title %></title>
+        <link>https://www.w3schools.com/xml/xml_rss.asp</link>
+        <description>New RSS tutorial on W3Schools</description>
+      </item>
+    <% end %>
+  </channel>
+
+</rss>

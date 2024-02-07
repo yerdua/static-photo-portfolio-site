@@ -1,0 +1,42 @@
+<html lang="en">
+  <head>
+    <title>Audrey Penven | Photography Archive</title>
+    <%= Helpers.head_content(meta_property_tags) %>
+    <style type='text/css'>
+      #page-header {
+        background-image: url('/images/q-marionette.jpg');
+        min-height: 33vw;
+        background-attachment: fixed;
+        background-size: 94vw auto;
+        background-position: 3vw var(--navbar-height);
+        display: table;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content-container">
+      <header class='site-header sticky'>
+        <%= File.read('templates/top_nav.html') %>
+      </header>
+      <section id='page-header'>
+        <div>
+          <h1 class='with-underline with-overline red-text'>Photography Archive</h1>
+        </div>
+      </section>
+      <section class='archive'>
+        <% albums.each do |album| %>
+          <div class='album-link'>
+            <img class='thumbnail' src="<%= album.primary_photo.img_url(:square) %>" alt="<%= album.title.gsub('"', '\"') %>">
+            <a href="<%= album.album_path %>"><span class='album-title'><%= album.title %></span></a>
+          </div>
+        <% end %>
+        <p>
+          At the risk of sounding like the "Under Construction" GIFs from the 90s, I'm working on adding more from the archive. Expect to find more here soon. In the meantime, find more over on <%= Helpers.link_tag(url: 'https://www.flickr.com/photos/audreypenven/albums', display_name: 'Flickr') %>. Last update to this page: <%= Date.today.strftime('%B %-d, %Y') %>.
+        </p>
+      </section>
+      <footer class='site-footer'>
+        <%= Helpers.site_footer %>
+      </footer>
+    </div>
+  </body>
+</html>

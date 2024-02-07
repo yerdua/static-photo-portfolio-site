@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= head_content(meta_property_tags) %>
+    <title>Audrey Penven</title>
+  </head>
+  <body>
+    <div class='content-container'>
+      <header class='site-header sticky'>
+        <%= File.read('templates/top_nav.html') %>
+      </header>
+      <section id='site-title'>
+        <div class='backdrop-filter'>
+          <div class='title'>
+            <img class='site-logo' src='/images/logo_large.png'>
+          </div>
+        </div>
+      </section>
+      <section class='fancy-nav'>
+        <div id='fancy-nav-portfolio' class='fancy-nav-block'>
+          <a href='/photography-portfolio'><span class='red-text title'>Portfolio</span></a>
+        </div>
+        <div id='fancy-nav-archive' class='fancy-nav-block'>
+          <a href='/photography-archive'><span class='red-text title'>Archive</span></a>
+        </div>
+        <div id='fancy-nav-blog' class='fancy-nav-block'>
+          <a href='/blog'><span class='red-text title'>Blog</span></a>
+        </div>
+        <div id='fancy-nav-about' class='fancy-nav-block'>
+          <a href='/about'><span class='red-text title'>About</span></a>
+        </div>
+      </section>
+
+      <footer class='site-footer'>
+        <%= site_footer %>
+      </footer>
+    </div>
+  </body>
+</html>

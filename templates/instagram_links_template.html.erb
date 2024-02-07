@@ -1,0 +1,26 @@
+<html lang="en">
+  <head>
+    <title>Audrey Penven - Instagram Links</title>
+    <%= head_content(meta_property_tags) %>
+    <style type='text/css'>
+      <% links.each do |link| %>
+        <% next unless link.background_image %>
+        #a-<%= link.identifier %> {
+          background-image: url('<%= link.background_image %>');
+          background-size: contain;
+        }
+      <% end %>
+    </style>
+  </head>
+  <body class='insta-links'>
+    <div class='content-container'>
+      <section class='links-container'>
+        <ul>
+          <% links.each do |link| %>
+            <%= link.html_tag %>
+          <% end %>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
